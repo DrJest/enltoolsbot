@@ -106,6 +106,9 @@ const checkPages = async () => {
       if (err) {
         return console.error(err.message);
       }
+      if (!response || response.length === 0) {
+        return bot.sendMessage(chatId, 'No tracking found');
+      }
       const response = rows.map(row => `ID: ${row.id} URL: ${row.url} Selector: ${row.selector}`).join('\n');
       bot.sendMessage(chatId, response);
     });
