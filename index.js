@@ -98,6 +98,18 @@ const checkPages = async () => {
     });
 
   });
+
+  bot.onText(/\/list/, async (msg) => {
+    const chatId = msg.chat.id;
+
+    db.all('SELECT * FROM tracking WHERE chat_id = ?', [chatId], (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      const response = rows.map(row => `ID: ${row.id} URL: ${row.url} Selector: ${row.selector}`).join('\n');
+      bot.sendMessage(chatId, response);
+    });
+  });
 })(bot, db);
 
 setInterval(checkPages, 10000);
