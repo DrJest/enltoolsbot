@@ -10,7 +10,7 @@ const token = process.env.TELEGRAM_TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
-const db = new sqlite3.Database('db.sqlite3', (err) => {
+const db = new sqlite3.Database(process.env.DB_PATH || 'db.sqlite3', (err) => {
   if (err) {
     console.error(err.message);
   }
